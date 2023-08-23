@@ -8,10 +8,10 @@ const errorDiv = document.querySelector(".error")
 const catDiv = document.querySelector(".cat-info")
 const selection = document.querySelector(".breed-select")
 loader.style.display = "none"
-const cats = null
+
 export function fetchBreeds() {
-   loader.style.display = "block" 
-  fetch("https://api.thecatapi.com/v1/breeds")
+    loader.style.display = "block" 
+    fetch("https://api.thecatapi.com/v1/breeds")
     .then(response => {
         if (!response.ok) {
             throw new Error(response.statusText)
@@ -21,11 +21,11 @@ export function fetchBreeds() {
     
     })
       .then(data => {
-        console.log(data);
         loader.style.display = "none"
         data.forEach(element => {
             const option = `<option value="${element.id}">${element.name}</option>`
             selection.insertAdjacentHTML("beforeend", option) 
+          
         });
 
         new SlimSelect({
@@ -41,23 +41,22 @@ export function fetchBreeds() {
 }
 
 export function addCatInfo(event) {
-        catDiv.setAttribute("hidden", "")
-        loader.style.display = "block"
-        const breed = event.target.value;
-        fetch(`https://api.thecatapi.com/v1/images/search?api_key=breed_ids=${breed}`)
+    catDiv.setAttribute("hidden", "")
+    loader.style.display = "block"
+    const breed = event.target.value;
+    fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${breed}`)
             
         .then(response => {
             if (!response.ok) {
                 throw "Oops! Something went wrong! Try reloading the page!"
             }
-            console.log(response);
             errorDiv.setAttribute("hidden", "")
             return response.json()
         })
             
-            .then(data => {
-            console.log(data);
-            catDiv.innerHTML = ""
+        .then(data => {
+
+            catDiv.innerHTML = ``
             const image = new Image();
             image.src = data[0].url;
             image.width =  700;
@@ -65,10 +64,9 @@ export function addCatInfo(event) {
             image.onload = function () {
                 catDiv.appendChild(image);
                 loader.style.display = "none";
-        };
+            }
 
-        catDiv.removeAttribute("hidden")
-
+            catDiv.removeAttribute("hidden")
         }) 
             
         .catch(error => {

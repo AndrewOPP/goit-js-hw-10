@@ -60,7 +60,6 @@ export function addCatInfo(event) {
         })
             
         .then(data => {
-            console.log(data[0]);
             catDiv.innerHTML = ``
             const markU = `<div class="text-div"><h1 class="text-div-title">${data[0].breeds[0].name}</h1><p class="text-div-description">${data[0].breeds[0].description}</p><p class="text-div-temperament"><b>Temperament: </b>${data[0].breeds[0].temperament}</p></div>`
 
